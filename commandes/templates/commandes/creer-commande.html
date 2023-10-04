@@ -1,0 +1,79 @@
+{% extends "marche/main.html" %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block carousel %}
+{% endblock %}
+{% block content %}
+{% if cart|length > 0 %}
+<div class="container  aeftcu">
+  <div class="row">
+  <div class="col-md-8">
+      <div>
+          <h3 style="color:#212121!important;">Coordonnées client</h3>
+      </div>
+      <form action="" method="post" class="order-form" id="commandeForm" data-cities-url="{% url "commandes:ajax_load_quartiers" %}">
+          {{ form|crispy }}
+          </br>
+          <p><input type="submit" class="btn btn-primary waves-effect waves-light adress-liv" value="Commander"></p>
+          {% csrf_token %}
+      </form>
+  </div>
+  <div class="col-md-4">
+    <ul class="list-group mb-3">
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+          <h6 class="my-0">Nombre d'articles</h6>
+          <small class="text-muted"></small>
+        </div>
+        <span class="badge badge-success">{{ cart | length }}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+          <h6 class="my-0">Sous-total</h6>
+          <small class="text-muted"></small>
+        </div>
+        <span class="text-muted" id="data-prix" data-price-total="{{ cart.get_prix_total_apres_reduction }}">{{ cart.get_prix_total_apres_reduction | intcomma }} FCFA</span>
+      </li>
+      {% if cart.coupon %}
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+          <h6 class="my-0">Code de réduction</h6>
+          <small class="text-muted"></small>
+        </div>
+        <span class="text-muted" id="">{{ cart.coupon.code }} ({{ cart.coupon.reduction }}% off)</span>
+      </li>
+      {% endif %}
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+          <h6 class="my-0">Prix de livraison</h6>
+          <small class="text-muted"></small>
+        </div>
+        <span class="text-muted" id="prix_livraison">Non disponible</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+          <h6 class="my-0">Prix total</h6>
+          <small class="text-muted">avec le prix de livraison</small>
+        </div>
+        <span class="text-muted" id="prix_total">Non disponible</span>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+</div>
+{% else %}
+<div class="container to_register">
+  <div class="row">
+    <div class="col-md-12" style="text-align: center;">
+      <i class="bx bxs-cart icon-single empty-icon-cart" style="font-size: 6rem;"></i>
+      <p style="font-size: 1.5rem;">Votre panier est vide</p>
+      <a href="{% url 'marche:accueil' %}" class="btn btn-primary waves-effect waves-light">Faire vos courses</a>
+    </div>
+  </div>
+</div>
+    
+{% endif %}
+{% endblock %}

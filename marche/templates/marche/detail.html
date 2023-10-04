@@ -1,0 +1,50 @@
+{% extends 'marche/main.html' %}
+{% load humanize %}
+{% load static %}
+{% block carousel %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container aeftcu">
+
+  <div class="row">
+    <div class="col-md-4 mb-4 mb-md-0">
+      {% if produit.image %}
+        <img src="{{ produit.image.url }}" class="w-100bdec" id=""w-100bdec" alt="" style="width: 90%;">
+      {% else %}
+        <img src="{% static 'images/courge.jpg' %}" class="w-100bdec" id=""w-100bdec" alt="" style="width: 90%;">
+      {% endif %}
+
+    </div>
+    <div class="col-md-8">
+
+      <h5>{{ produit.nom }}</h5>
+      <p><span class="mr-1"><strong>{{ produit.prix }} FCFA</strong></span></p>
+
+      <p class="pt-1">{{ produit.description }}</p>
+      
+      <div class="table-responsive">
+        <table class="table table-sm table-borderless mb-0">
+          <tbody>
+            <tr>
+              <th class="pl-0 w-25" scope="row"><strong>Provenance</strong></th>
+              <td>{{ produit.provenance }}</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+      <hr>
+      <form action="{% url "cart:cart_add" produit.id %}" method="post" class="form-order" data-id="{{ produit.id }}" >
+        {{ cart_produit_form_cat }}
+        {% csrf_token %}
+        <a data-id="{{ produit.id }}" class="acheter-produit"><button>ACHETER</button></a>
+    </form>
+    </div>
+  </div>
+
+</div>
+<!--Section: Block Content-->
+
+{% endblock %}

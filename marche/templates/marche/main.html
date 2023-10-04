@@ -1,0 +1,1118 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  
+  <meta name="description" content="{% block description %}Samamarché vous livre le meilleurs du frais tous les jours. Rester chez vous et acheter des légumes, du poisson frais, de la viande, des produits épiciers et même du riz directement chez nos producteurs, pêcheurs et éleveurs partenaires{% endblock %}"/>
+  
+	<meta name="author" content="Samamarché" />
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="theme-color" content="#fff"/>
+  <title>{% block title %} Vente en ligne de produits alimentaires frais - Samamarché {% endblock %}</title>
+  
+  <meta name="supported-color-schemes" content="light"/>
+  <meta name="color-scheme" content="light"/><meta name="theme-color"content="#fff"/>
+  <meta name="msapplication-navbutton-color" content="#fff"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="#fff"/>
+  <meta name="keywords" content="livraison fruits,légumes,poissons et viandes,fruits exotiques,fruits locaux,primeur dakar,fruits et légumes,livraison légumes,livraison fruits,livraison poissons,fruit sec,corbeille de fruits,marché de castor,confitures artisanales,livraison produits frais,panier légumes,fruits frais">
+      
+  <!--<link rel="manifest" href="https://www.samamarche.sn/assets/json/manifest.json">-->
+  <link rel="shortcut icon" href=""/>
+
+  
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://www.samamarche.sn/" />
+	<meta property="og:image" content="https://www.samamarche.sn/assets/images/fb.png"/>
+	<meta property="og:locale" content="fr_FR" />
+	<meta property="og:site_name" content="Samamarché"/>
+
+  
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/extras_.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/slick.css' %}"/>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/boxicons.min.css' %}"/>
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    
+    <script text="javascript">
+      function getToken(name) {
+		    var cookieValue = null;
+		    if (document.cookie && document.cookie !== '') {
+		        var cookies = document.cookie.split(';');
+		        for (var i = 0; i < cookies.length; i++) {
+		            var cookie = cookies[i].trim();
+		            // Does this cookie string begin with the name we want?
+		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                break;
+		            }
+		        }
+		    }
+		    return cookieValue;
+		}
+    var csrftoken = getToken('csrftoken')
+    
+
+    </script>
+    
+</head>
+
+<body>
+   
+{% block head %}
+
+<div class="overlay"></div>
+<div class="utility-nav d-none d-md-block">
+  <div class="container">
+    {% for info in info %}
+    <div class="row">
+      <div class="col-12 col-md-6">
+        
+        <p class="small"><i class="bx bx-envelope"></i> {{ info.email }} | <i class="bx bx-phone"></i> {{ info.telephone }}
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 text-right cartv">
+        <p class="small">{{ info.free_liv }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="fih">
+  
+    <div class="row" style="background-color: rgb(0, 102, 79)!important;">
+      <div class="col-md-12" style="background-color: rgb(0, 102, 79)!important;">
+        <div aria-live="polite" aria-atomic="true" class="position-relative" style="min-width: 100%; text-align: center; background-color: rgb(0, 102, 79)!important;">
+          <div class="position-absolute" id="toast-place" style="top:0px; min-width: 100%!important; z-index: 10000000000000000; background: rgb(0, 102, 79)!important;">
+          </div>
+        </div>
+      </div>
+  </div>
+
+<nav class="navbar navbar-expand-md navbar-light bg-light main-menu" style="box-shadow:none">
+  <div class="container">
+
+    <button type="button" id="sidebarCollapse" class="btn btn-link d-block d-md-none">
+                <i class="bx bx-menu icon-single"></i>
+            </button>
+
+    <a class="navbar-brand" href="{% url 'marche:accueil' %}">
+      <h4 class="font-weight-bold logo">Taara</h4>
+    </a>
+
+    <ul class="navbar-nav ml-auto d-block d-md-none">
+      <li class="nav-item">
+        <a class="btn btn-link" href="{% url 'cart:cart_detail' %}"><i class="bx bxs-cart icon-single">
+        </i> <span class="" id="cartve">{{ cart|length }}</span>
+      </a>
+      </li>
+    </ul>
+
+    <div class="collapse navbar-collapse">
+      <!--
+      <form class="form-inline form-searchs my-2 my-lg-0 mx-auto">
+        <input class="form-control" type="search" placeholder="Vous avez envie d'un produit frais ?" aria-label="Search">
+        <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="bx bx-search"></i></button>
+      </form>
+      -->
+      <form action="{% url "marche:post_search" %}" method="get" class="form-inline form-searchs my-2 my-lg-0 mx-auto">
+        {{ searchform }}
+        <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="bx bx-search"></i></button>
+      </form>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="btn btn-link" href="{% url 'cart:cart_detail' %}"><i class="bx bxs-cart icon-single"></i> <div class="" id="cartv">{{ cart | length }}</div></a>
+        </li>
+        {% if user.is_authenticated %}
+          <li class="nav-item ml-md-3">
+            <a class="btn btn-primary" href="{% url 'profile' %}"><i class="bx bxs-user-circle mr-1"></i>Mon compte</a>
+          </li>
+          {% else %}
+          <li class="nav-item ml-md-3">
+            <a class="btn btn-primary" href="{% url 'login' %}"><i class="bx bxs-user-circle mr-1"></i>Se connecter</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<nav class="navbar navbar-expand-md navbar-light bg-light sub-menu">
+  <div class="container sub-container">
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Légumes</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#legumes-classiques">Oignons, pommes de terre, patates</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#ails-et-herbes-vertes">Ails et herbes vertes</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#salades-tomates-et-concombres">Salades, tomates et concombres</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#oignons-pommes-de-terre-et-patates">Oignons, pommes de terre et patates</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#paniers-de-legumes">Paniers de légumes</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#epices-et-aromes">Epices et aromes</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#herbes-aromatiques">herbes aromatiques</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#legumes-secs">légumes secs</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fruits</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'fruits' %}#fruits-exotiques">Fruits exotiques</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'fruits' %}#legumes-classiques">Fruits locaux</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'fruits' %}#legumes-classiques">Jus et confitures natures</a> 
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Poissons</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'poissons' %}#poissons-frais">Poissons frais</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'poissons' %}#fruits-de-mer">Fruits de mer</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Viandes</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'viandes' %}#viandes-de-volaille">Viandes de volaille</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'viandes' %}#viandes-de-boeuf">Viandes de boeuf</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'viandes' %}#viandes-de-mouton">Viandes de mouton</a>
+            
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Epicerie</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'epicerie' %}#cereales-et-riz-de-la-vallee">Céréales et riz de la vallée</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'epicerie' %}#huiles">Huiles</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'epicerie' %}#boissons-et-eaux">Boissons et eaux</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'epicerie' %}#produits-laitiers">Produits laitiers</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'epicerie' %}#produits-dentretien">Produits d'entretien</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bébé</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'bebe' %}#alimentation">Alimentation</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'bebe' %}#couches-et-lingettes">Couches et lingettes</a>
+            <a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'bebe' %}#soin-de-peau">Douche et soin de peau</a>
+          </div>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+
+
+<div class="search-bar d-block d-md-none">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <form action="{% url "marche:post_search" %}" method="get" class="form-inline mb-3 mx-auto">
+          {{ searchform }}
+          <button class="btn btn-success" type="submit"><i class="bx bx-search"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="container">
+      <div class="row align-items-center">
+        {% if user.is_authenticated %}
+        <div class="col-10 pl-0">
+          <a class="btn btn-primary" href="{% url 'profile' %}"><i class="bx bxs-user-circle mr-1"></i> Mon compte</a>
+        </div>
+        {% else %}
+        <div class="col-10 pl-0">
+          <a class="btn btn-primary" href="{% url 'login' %}"><i class="bx bxs-user-circle mr-1"></i> Se connecter</a>
+        </div>
+        {% endif %}
+
+        <div class="col-2 text-left">
+          <button type="button" id="sidebarCollapseX" class="btn btn-link">
+                            <i class="bx bx-x icon-single"></i>
+                        </button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--  
+  <li class="nav-item drop">
+    <a class="nav-link collapsed" href="#submenu1" data-toggle="collapse" > sub menu 1</a>
+    <div class="collapse" id="submenu1" aria-expanded="false">
+        <ul class="flex-column pl-2 nav">
+            <li class="nav-item"><a class="nav-link py-0" href="#">Orders</a></li>
+            <li class="nav-item">
+                <a class="nav-link collapsed py-1" href="#submenu1sub1" data-toggle="collapse" >Customers</a>
+                <div class="collapse" id="submenu1sub1" aria-expanded="false">
+                    <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                            <a class="nav-link p-1" href="#">
+                                <i class="fa fa-fw fa-clock-o"></i> Daily
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1" href="#">
+                                <i class="fa fa-fw fa-dashboard"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1" href="#">
+                                <i class="fa fa-fw fa-bar-chart"></i> Charts
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1" href="#">
+                                <i class="fa fa-fw fa-compass"></i> 111111Areas
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</li>
+
+
+
+<li class="nav-item drop">
+    <a class="nav-link collapsed" href="#submenu4" data-toggle="collapse" >sub menu 2</a>
+    <div class="collapse" id="submenu4" aria-expanded="false">
+        <ul class="flex-column pl-2 nav">
+            <li class="nav-item"><a class="nav-link py-0" href="#">Orders</a></li>
+            <li class="nav-item">
+                <a class="nav-link collapsed py-1" href="#submenu1sub3" data-toggle="collapse" >Customers</a>
+                <div class="collapse" id="submenu1sub3" aria-expanded="false">
+                    <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                            <a class="nav-link p-1" href="#">
+                                <i class="fa fa-fw fa-clock-o"></i> Daily
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1" href="#">
+                                <i class="fa fa-fw fa-dashboard"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1" href="#">
+                                <i class="fa fa-fw fa-bar-chart"></i> Charts
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1" href="#">
+                                <i class="fa fa-fw fa-compass"></i> 22222222Areas
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</li>
+
+<li class="nav-item"><a class="nav-link" href="#">Analytics</a></li>
+<li class="nav-item"><a class="nav-link" href="#">Export</a></li>
+-->
+
+<ul class="list-unstyled components links" id="my-nav">
+  <li class="nav-item drop">
+    <a class="nav-link collapsed dropdown-toggle" href="#submenu1" data-toggle="collapse" >Légumes</a>
+    <div class="collapse" id="submenu1" aria-expanded="false">
+      <ul class="flex-column pl-2 nav">
+        <a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#legumes-classiques">Oignons, pommes de terre, patates</a>  
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#ails-et-herbes-vertes">Ails et herbes vertes</a></li>
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#salades-tomates-et-concombres">Salades, tomates et concombres</a></li>
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#oignons-pommes-de-terre-et-patates">Oignons, pommes de terre et patates</a></li>
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#paniers-de-legumes">Paniers de légumes</a></li>
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#epices-et-aromes">Epices et aromes</a></li>
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#herbes-aromatiques">herbes aromatiques</a></li>
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#legumes-secs">légumes secs</a></li>         
+      </ul>
+    </div>
+  </li>
+  
+  <li class="nav-item drop">
+    <a class="nav-link collapsed dropdown-toggle" href="#submenu2" data-toggle="collapse" >Fruits</a>
+    <div class="collapse" id="submenu2" aria-expanded="false">
+        <ul class="flex-column pl-2 nav">
+          <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'fruits' %}#fruits-exotiques">Fruits exotiques</a></li>
+          <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'fruits' %}#legumes-classiques">Fruits locaux</a></li>
+          <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'fruits' %}#legumes-classiques">Jus et confitures natures</a></li>
+        </ul>
+    </div>
+  </li>
+
+  <li class="nav-item drop">
+    <a class="nav-link collapsed dropdown-toggle" href="#submenu3" data-toggle="collapse" >Poissons</a>
+    <div class="collapse" id="submenu3" aria-expanded="false">
+      <ul class="flex-column pl-2 nav">
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'poissons' %}#poissons-frais">Poissons frais</a></li>
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'poissons' %}#fruits-de-mer">Fruits de mer</a></li>
+      </ul>
+    </div>
+  </li>
+      
+  <li class="nav-item drop">
+    <a class="nav-link collapsed dropdown-toggle" href="#submenu4" data-toggle="collapse" >Viandes</a>
+    <div class="collapse" id="submenu4" aria-expanded="false">
+      <ul class="flex-column pl-2 nav">
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'viandes' %}#viandes-de-volaille">Viandes de volaille</a></li>
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'viandes' %}#viandes-de-boeuf">Viandes de boeuf</a></li>
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'viandes' %}#viandes-de-mouton">Viandes de mouton</a></li>
+            
+      </ul>
+    </div>
+  </li>
+
+  <li class="nav-item drop">
+    <a class="nav-link collapsed dropdown-toggle" href="#submenu5" data-toggle="collapse" >Epicérie</a>
+    <div class="collapse" id="submenu5" aria-expanded="false">
+      <ul class="flex-column pl-2 nav">
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'epicerie' %}#cereales-et-riz-de-la-vallee">Céréales et riz de la vallée</a></li>          
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'epicerie' %}#huiles">Huiles</a></li>
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'epicerie' %}#boissons-et-eaux">Boissons et eaux</a></li>
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'epicerie' %}#produits-laitiers">Produits laitiers</a></li>
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'epicerie' %}#produits-dentretien">Produits d'entretien</a></li>
+      </ul>
+    </div>
+  </li>
+
+  <li class="nav-item drop">
+    <a class="nav-link collapsed dropdown-toggle" href="#submenu6" data-toggle="collapse" >Bébé</a>
+    <div class="collapse" id="submenu6" aria-expanded="false">
+      <ul class="flex-column pl-2 nav">
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'bebe' %}#alimentation">Alimentation</a></li>
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'bebe' %}#couches-et-lingettes">Couches et lingettes</a></li>
+        <li><a class="dropdown-item pleoo" href="{% url "marche:produit_par_supcategorie" 'bebe' %}#couches-et-lingettes">Douche et soin de peau</a></li>
+      </ul>
+    </div>
+  </li>
+</ul>
+
+
+
+  <ul class="social-icons">
+    <li><a href="#" target="_blank" title=""><i class="bx bxl-facebook-square"></i></a></li>
+    <li><a href="#" target="_blank" title=""><i class="bx bxl-twitter"></i></a></li>
+    <li><a href="#" target="_blank" title=""><i class="bx bxl-linkedin"></i></a></li>
+    <li><a href="#" target="_blank" title=""><i class="bx bxl-instagram"></i></a></li>
+  </ul>
+
+</nav>
+</div>
+{% endblock %}
+{% block carousel %}
+    <!-- Image Carousel -->
+        <div class="carousel slide" id="carousel" data-ride="carousel" data-interval="6500">
+            <!-- Carousel Content -->
+            <div class="carousel-inner">
+                {% for homeslide in homeslides %}
+                  {% if forloop.first %}
+                    <div class="carousel-item active">
+                      <img src="{{ homeslide.image.url }}" alt="" class="img-fluid">
+                    </div>
+                  {% else %}
+                    <div class="carousel-item">
+                      <img src="{{ homeslide.image.url }}" alt="" class="img-fluid">
+                    </div>
+                  {% endif %}
+                {% endfor %}
+      
+            </div>
+            <!-- End Carousel Content -->
+
+            <!-- Previous & Next Buttons -->
+            <a href="#carousel" class="carousel-control-next" role="button" data-slide="next">
+                <span class="fas fa-chevron-right fa-2x"></span>
+            </a>
+            <a href="#carousel" class="carousel-control-prev" role="button" data-slide="prev">
+                <span class="fas fa-chevron-left fa-2x"></span>
+            </a>
+            <!-- End Previous & Next Buttons -->
+        </div>
+<!-- End Image Carousel -->
+{% endblock %}
+<!-- Main Page Heading-->
+    
+    
+    {% block content %}
+    
+    <!-- Legumes block -->
+
+    <div class="container desc-categ">
+      <div class="row">
+        <div class="col-md-12">
+          {% if legumes|length > 0 %}
+            {% for cat in cat_legumes %}
+            <ul  class="list-group">
+              <li class=" d-flex justify-content-between lh-condensed categ">
+                
+                <h2 class="text-dark">{{ cat.nom }}</h2>
+                <span class="see-all-prod">Voir tous</span>
+              </li>
+            </ul>
+            <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+            {% endfor %}
+          {% else %}
+            {% for cat in cat_legumes %}
+            <ul  class="list-group">
+              <li class=" d-flex justify-content-between lh-condensed categ">
+                
+                <h2 class="text-dark">{{ cat.nom }}</h2>
+              </li>
+            </ul>
+            <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="container produit ecfgg">
+      {% if legumes|length > 0 %}
+      <div class="row responsive">
+        {% for produit in legumes %}
+        <div class="col-md-2 ">
+            {% if produit.image %}
+              <img src="{{ produit.image.url }}" class="w-100ce lazy img-responsive" alt="{{ produit.nom }}" data-src="{% static 'images/courge.jpg' %}">
+            {% else %}
+              <img src="{% static 'images/courge.jpg' %}" class="w-100ce lazy img-responsive" alt="{{ produit.nom }}" data-src="{% static 'images/courge.jpg' %}">
+            {% endif %}
+            <h5 class="my-3">{{ produit.nom }}</h5>
+            <span class="my-3">{{ produit.prix | intcomma }} FCFA/{{ produit.unite }}</span>
+            
+            <form action="{% url "cart:cart_add" produit.id %}"  method="post" data-id="{{ produit.id }}" class="form-order" id="form">
+                {{ cart_produit_form }}
+                {% csrf_token %}
+                <!--<button type="submit" data-id="{{ legume.id }}">Submit</button>-->
+                <a data-id="{{ produit.id }}" class="acheter-produit"><button>ACHETER</button></a>
+               
+                <!--<input type="submit" value="ACHETER" data-action="add" data-id="{{ legume.id }}" class="acheter-produit">-->
+            </form>
+        </div> 
+        {% endfor %}
+
+        
+      </div>
+
+      {% else %}
+      <div class="row ">
+        <h5 class="empty_prod">Il n'y a pas encore de produit lié à cette catégorie</h5>
+      </div>
+      {% endif %}
+    </div>
+    <!--End legumes block-->
+        
+    <!-- Fruits block -->
+    <div class="container desc-categ">
+      <div class="row">
+        <div class="col-md-12">
+          {% if fruits|length > 0 %}
+            {% for cat in cat_fruits %}
+            <ul  class="list-group">
+              <li class=" d-flex justify-content-between lh-condensed categ">
+                
+                <h2 class="text-dark">{{ cat.nom }}</h2>
+                <span class="see-all-prod">Voir tous</span>
+              </li>
+            </ul>
+            <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+            {% endfor %}
+          {% else %}
+            {% for cat in cat_fruits %}
+            <ul  class="list-group">
+              <li class=" d-flex justify-content-between lh-condensed categ">
+                
+                <h2 class="text-dark">{{ cat.nom }}</h2>
+              </li>
+            </ul>
+            <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="container produit ecfgg">
+      {% if fruits|length > 0 %}
+      <div class="row responsive">
+        {% for produit in fruits %}
+        <div class="col-md-2 ">
+            {% if produit.image %}
+              <img src="{{ produit.image.url }}" class="w-100ce" alt="">
+            {% else %}
+              <img src="{% static 'images/courge.jpg' %}" class="w-100ce" alt="">
+            {% endif %}
+            <h5 class="my-3">{{ produit.nom }}</h5>
+            <span class="my-3">{{ produit.prix | intcomma }} FCFA/{{ produit.unite }}</span>
+            
+            <form action="{% url "cart:cart_add" produit.id %}"  method="post" data-id="{{ produit.id }}" class="form-order" id="form">
+                {{ cart_produit_form }}
+                {% csrf_token %}
+                <!--<button type="submit" data-id="{{ legume.id }}">Submit</button>-->
+                <a data-id="{{ produit.id }}" class="acheter-produit"><button>ACHETER</button></a>
+                <!--<input type="submit" value="ACHETER" data-action="add" data-id="{{ legume.id }}" class="acheter-produit">-->
+            </form>
+               
+        </div> 
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="row ">
+        <h5 class="empty_prod">Il n'y a pas encore de produit lié à cette catégorie</h5>
+      </div>
+      {% endif %}
+    </div>
+    <!--End fruits block-->
+
+
+     <!-- Fish block -->
+     <div class="container desc-categ">
+      <div class="row">
+        <div class="col-md-12">
+          {% if poissons|length > 0 %}
+            {% for cat in cat_poissons %}
+            <ul  class="list-group">
+              <li class=" d-flex justify-content-between lh-condensed categ">
+                
+                <h2 class="text-dark">{{ cat.nom }}</h2>
+                <span class="see-all-prod">Voir tous</span>
+              </li>
+            </ul>
+            <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+            {% endfor %}
+          {% else %}
+            {% for cat in cat_poissons %}
+            <ul  class="list-group">
+              <li class=" d-flex justify-content-between lh-condensed categ">
+                
+                <h2 class="text-dark">{{ cat.nom }}</h2>
+              </li>
+            </ul>
+            <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="container produit ecfgg">
+      {% if poissons|length > 0 %}
+      <div class="row responsive">
+        {% for produit in poissons %}
+        <div class="col-md-2 ">
+            {% if produit.image %}
+              <img src="{{ produit.image.url }}" class="w-100ce" alt="">
+            {% else %}
+              <img src="{% static 'images/courge.jpg' %}" class="w-100ce" alt="">
+            {% endif %}
+            <h5 class="my-3">{{ produit.nom }}</h5>
+            <span class="my-3">{{ produit.prix | intcomma }} FCFA/{{ produit.unite }}</span>
+            
+            <form action="{% url "cart:cart_add" produit.id %}"  method="post" data-id="{{ produit.id }}" class="form-order" id="form">
+                {{ cart_produit_form }}
+                {% csrf_token %}
+                <!--<button type="submit" data-id="{{ legume.id }}">Submit</button>-->
+                <a data-id="{{ produit.id }}" class="acheter-produit"><button>ACHETER</button></a>
+                <!--<input type="submit" value="ACHETER" data-action="add" data-id="{{ legume.id }}" class="acheter-produit">-->
+            </form>
+               
+        </div> 
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="row ">
+        <h5 class="empty_prod">Il n'y a pas encore de produit lié à cette catégorie</h5>
+      </div>
+      {% endif %}
+    </div>
+    <!--End fish block-->
+
+
+     <!-- Meat block -->
+    <div class="container desc-categ">
+      <div class="row">
+        <div class="col-md-12">
+          {% if viandes|length > 0 %}
+            {% for cat in cat_viandes %}
+            <ul  class="list-group">
+              <li class=" d-flex justify-content-between lh-condensed categ">
+                
+                <h2 class="text-dark">{{ cat.nom }}</h2>
+                <span class="see-all-prod">Voir tous</span>
+              </li>
+            </ul>
+            <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+            {% endfor %}
+          {% else %}
+            {% for cat in cat_viandes %}
+            <ul  class="list-group">
+              <li class=" d-flex justify-content-between lh-condensed categ">
+                
+                <h2 class="text-dark">{{ cat.nom }}</h2>
+              </li>
+            </ul>
+            <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="container produit ecfgg">
+      {% if viandes|length > 0 %}
+      <div class="row responsive">
+        {% for produit in viandes %}
+        <div class="col-md-2 ">
+            {% if produit.image %}
+              <img src="{{ produit.image.url }}" class="w-100ce" alt="">
+            {% else %}
+              <img src="{% static 'images/courge.jpg' %}" class="w-100ce" alt="">
+            {% endif %}
+            <h5 class="my-3">{{ produit.nom }}</h5>
+            <span class="my-3">{{ produit.prix | intcomma }} FCFA/{{ produit.unite }}</span>
+            
+            <form action="{% url "cart:cart_add" produit.id %}"  method="post" data-id="{{ produit.id }}" class="form-order" id="form">
+                {{ cart_produit_form }}
+                {% csrf_token %}
+                <!--<button type="submit" data-id="{{ legume.id }}">Submit</button>-->
+                <a data-id="{{ produit.id }}" class="acheter-produit"><button>ACHETER</button></a>
+                <!--<input type="submit" value="ACHETER" data-action="add" data-id="{{ legume.id }}" class="acheter-produit">-->
+            </form>
+               
+        </div> 
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="row ">
+        <h5 class="empty_prod">Il n'y a pas encore de produit lié à cette catégorie</h5>
+      </div>
+      {% endif %}
+    </div>
+    <!--End Meat block-->
+
+
+    <!-- Epicerie block -->
+    <div class="container desc-categ">
+      <div class="row">
+          <div class="col-md-12">
+          {% if epicerie|length > 0 %}
+            {% for cat in cat_epicerie %}
+            <ul  class="list-group">
+              <li class=" d-flex justify-content-between lh-condensed categ">
+                
+                <h2 class="text-dark">{{ cat.nom }}</h2>
+                <span class="see-all-prod">Voir tous</span>
+              </li>
+            </ul>
+            <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+            {% endfor %}
+          {% else %}
+            {% for cat in cat_epicerie %}
+            <ul  class="list-group">
+              <li class=" d-flex justify-content-between lh-condensed categ">
+                
+                <h2 class="text-dark">{{ cat.nom }}</h2>
+              </li>
+            </ul>
+            <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="container produit ecfgg">
+      {% if epicerie|length > 0 %}
+      <div class="row responsive">
+        {% for produit in epicerie %}
+        <div class="col-md-2 ">
+            {% if produit.image %}
+              <img src="{{ produit.image.url }}" class="w-100ce" alt="">
+            {% else %}
+              <img src="{% static 'images/courge.jpg' %}" class="w-100ce" alt="">
+            {% endif %}
+            <h5 class="my-3">{{ produit.nom }}</h5>
+            <span class="my-3">{{ produit.prix | intcomma }} FCFA/{{ produit.unite }}</span>
+            
+            <form action="{% url "cart:cart_add" produit.id %}"  method="post" data-id="{{ produit.id }}" class="form-order" id="form">
+                {{ cart_produit_form }}
+                {% csrf_token %}
+                <!--<button type="submit" data-id="{{ legume.id }}">Submit</button>-->
+                <a data-id="{{ produit.id }}" class="acheter-produit"><button>ACHETER</button></a>
+                <!--<input type="submit" value="ACHETER" data-action="add" data-id="{{ legume.id }}" class="acheter-produit">-->
+            </form>
+               
+        </div> 
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="row ">
+        <h5 class="empty_prod">Il n'y a pas encore de produit lié à cette catégorie</h5>
+      </div>
+      {% endif %}
+    </div>
+    <!--End Epicerie block-->
+
+    
+    <!-- Bebe block -->
+    <div class="container desc-categ">
+      <div class="row">
+          <div class="col-md-12">
+          {% if bebe|length > 0 %}
+            {% for cat in cat_bebe %}
+            <ul  class="list-group">
+              <li class=" d-flex justify-content-between lh-condensed categ">
+                
+                <h2 class="text-dark">{{ cat.nom }}</h2>
+                <span class="see-all-prod">Voir tous</span>
+              </li>
+            </ul>
+            <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+            {% endfor %}
+          {% else %}
+            {% for cat in cat_bebe %}
+            <ul  class="list-group">
+              <li class=" d-flex justify-content-between lh-condensed categ">
+                
+                <h2 class="text-dark">{{ cat.nom }}</h2>
+              </li>
+            </ul>
+            <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="container produit ecfgg">
+      {% if bebe|length > 0 %}
+      <div class="row responsive">
+        {% for produit in bebe %}
+        <div class="col-md-2 ">
+            {% if produit.image %}
+              <img src="{{ produit.image.url }}" class="w-100ce" alt="">
+            {% else %}
+              <img src="{% static 'images/courge.jpg' %}" class="w-100ce" alt="">
+            {% endif %}
+            <h5 class="my-3">{{ produit.nom }}</h5>
+            <span class="my-3">{{ produit.prix | intcomma }} FCFA/{{ produit.unite }}</span>
+            
+            <form action="{% url "cart:cart_add" produit.id %}"  method="post" data-id="{{ produit.id }}" class="form-order" id="form">
+                {{ cart_produit_form }}
+                {% csrf_token %}
+                <!--<button type="submit" data-id="{{ legume.id }}">Submit</button>-->
+                <a data-id="{{ produit.id }}" class="acheter-produit"><button>ACHETER</button></a>
+                <!--<input type="submit" value="ACHETER" data-action="add" data-id="{{ legume.id }}" class="acheter-produit">-->
+            </form>
+               
+        </div> 
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="row ">
+        <h5 class="empty_prod">Il n'y a pas encore de produit lié à cette catégorie</h5>
+      </div>
+      {% endif %}
+    </div>
+    <!--End Bebe block-->
+
+
+    <!-- Beaute block -->
+    <div class="container desc-categ">
+      <div class="row">
+          <div class="col-md-12">
+          {% if beaute|length > 0 %}
+            {% for cat in cat_beaute %}
+            <ul  class="list-group">
+              <li class=" d-flex justify-content-between lh-condensed categ">
+                <h2 class="text-dark">{{ cat.nom }}</h2>
+                <span class="see-all-prod">Voir tous</span>
+              </li>
+            </ul>
+            <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+            {% endfor %}
+          {% else %}
+            {% for cat in cat_beaute %}
+            <ul  class="list-group">
+              <li class=" d-flex justify-content-between lh-condensed categ">
+                
+                <h2 class="text-dark">{{ cat.nom }}</h2>
+              </li>
+            </ul>
+            <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="container produit ecfgg">
+      {% if beaute|length > 0 %}
+      <div class="row responsive">
+        {% for produit in beaute %}
+        <div class="col-md-2 ">
+            {% if produit.image %}
+              <img src="{{ produit.image.url }}" class="w-100ce" alt="">
+            {% else %}
+              <img src="{% static 'images/courge.jpg' %}" class="w-100ce" alt="">
+            {% endif %}
+            <h5 class="my-3">{{ produit.nom }}</h5>
+            <span class="my-3">{{ produit.prix | intcomma }} FCFA/{{ produit.unite }}</span>
+            
+            <form action="{% url "cart:cart_add" produit.id %}"  method="post" data-id="{{ produit.id }}" class="form-order" id="form">
+                {{ cart_produit_form }}
+                {% csrf_token %}
+                <!--<button type="submit" data-id="{{ legume.id }}">Submit</button>-->
+                <a data-id="{{ produit.id }}" class="acheter-produit"><button>ACHETER</button></a>
+
+                <!--<input type="submit" value="ACHETER" data-action="add" data-id="{{ legume.id }}" class="acheter-produit">-->
+            </form>
+               
+        </div> 
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="row ">
+        <h5 class="empty_prod">Il n'y a pas encore de produit lié à cette catégorie</h5>
+      </div>
+      {% endif %}
+    </div>
+    <!--End Beaute block-->
+
+
+    <!-- Vaisselle Block -->
+    <div class="container desc-categ">
+      <div class="row">
+          <div class="col-md-12">
+            {% if vaisselle|length > 0 %}
+              {% for cat in cat_vaisselle %}
+              <ul  class="list-group">
+                <li class=" d-flex justify-content-between lh-condensed categ">
+                  
+                  <h2 class="text-dark">{{ cat.nom }}</h2>
+                  <span class="see-all-prod">Voir tous</span>
+                </li>
+              </ul>
+              <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+              {% endfor %}
+            {% else %}
+              {% for cat in cat_vaisselle %}
+              <ul  class="list-group">
+                <li class=" d-flex justify-content-between lh-condensed categ">
+                  <h2 class="text-dark">{{ cat.nom }}</h2>
+                </li>
+              </ul>
+              <p class="lead" style="text-align: justify;">{{ cat.description }}</p>
+              {% endfor %}
+            {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="container produit ecfgg">
+        {% if vaisselle|length > 0 %}
+        <div class="row responsive">
+          
+          {% for produit in vaisselle %}
+          <div class="col-md-2">
+              {% if produit.image %}
+                <img src="{{ produit.image.url }}" class="w-100ce" alt="">
+              {% else %}
+                <img src="{% static 'images/courge.jpg' %}" class="w-100ce" alt="">
+              {% endif %}
+              <h5 class="my-3">{{ produit.nom }}</h5>
+              <span class="my-3">{{ produit.prix | intcomma }} FCFA/{{ produit.unite }}</span>
+              
+              <form action="{% url "cart:cart_add" produit.id %}"  method="post" data-id="{{ produit.id }}" class="form-order" id="form">
+                  {{ cart_produit_form }}
+                  {% csrf_token %}
+                  <!--<button type="submit" data-id="{{ legume.id }}">Submit</button>-->
+                  <a data-id="{{ produit.id }}" class="acheter-produit"><button>ACHETER</button></a>
+                  <!--<input type="submit" value="ACHETER" data-action="add" data-id="{{ legume.id }}" class="acheter-produit">-->
+              </form>
+                 
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="row ">
+          <h5 class="empty_prod">Il n'y a pas encore de produit lié à cette catégorie</h5>
+        </div>
+        {% endif %}
+      </div>
+    <!--End Vaisselle block-->
+
+    {% endblock %}
+    {% block footer %}
+    <!-- Footer -->
+<footer class="page-footer font-small blue-grey lighten-5">
+
+  <div class="prefooter" style="margin-top: 15px;">
+    <div class="">
+
+      <!-- Grid row-->
+      <div class="row py-4 d-flex align-items-center">
+
+        <!-- Grid column -->
+        <div class="col-md-6 col-lg-5 text-md-left mb-4 mb-md-0">
+          <h6 class="mb-0">Retrouver nous sur les réseaux sociaux</h6>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-6 col-lg-7 text-center text-md-right">
+
+          <!-- Facebook -->
+          <a class="fb-ic">
+            <i class="fab fa-facebook-f white-text mr-4"> </i>
+          </a>
+          <!-- Twitter -->
+          <a class="tw-ic">
+            <i class="fab fa-twitter white-text mr-4"> </i>
+          </a>
+
+          </a>
+          <!--Instagram-->
+          <a class="ins-ic">
+            <i class="fab fa-instagram white-text"> </i>
+          </a>
+
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row-->
+
+    </div>
+  </div>
+
+  <!-- Footer Links -->
+  <div class="footer-f text-md-left mt-5">
+
+    <!-- Grid row -->
+    
+    <div class="row mt-3 dark-grey-text">
+
+      <!-- Grid column -->
+      <div class="col-md-3 col-lg-2 col-xl-3  mb-4">
+
+        <!-- Content -->
+        <h6 class="text-uppercase font-weight-bold">A propos</h6>
+        <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+       
+        <p>{% for info in info %}{{ info.description }}{% endfor %}</p>
+      
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 col-lg-2 col-xl-3  mb-4">
+
+        <!-- Links -->
+        <h6 class="text-uppercase font-weight-bold">Vous gérez un Business</h6>
+        <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        <p>{% for info in info %}{{ info.for_business }}{% endfor %}</p>
+
+      </div>  
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+
+        <!-- Links -->
+        <h6 class="text-uppercase font-weight-bold">Categories</h6>
+        <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        <p>
+          <a href="{% url "marche:produit_par_supcategorie" 'legumes' %}#legumes-classiques">Légumes</a>
+        </p>
+        <p>
+          <a href="{% url "marche:produit_par_supcategorie" 'fruits' %}#fruits-exotiques">Fruits</a>
+        </p>
+        <p>
+          <a href="{% url "marche:produit_par_supcategorie" 'poissons' %}#poissons-frais">Poissons</a>
+        </p>
+        <p>
+          <a href="{% url "marche:produit_par_supcategorie" 'viandes' %}#viandes-de-volaille">Viandes</a>
+        </p>
+        <p>
+          <a href="{% url "marche:produit_par_supcategorie" 'epicerie' %}#cereales-et-riz-de-la-vallee">Epicerie</a>
+        </p>
+        <p>
+          <a href="{% url "marche:produit_par_supcategorie" 'bebe' %}#alimentation">Bébé</a>
+        </p>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+
+        <!-- Links -->
+        <h6 class="text-uppercase font-weight-bold">Contact</h6>
+        <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+        <p>
+          <i class="fas fa-home mr-3"></i>info.adresse</p>
+        <p>
+          <i class="fas fa-envelope mr-3"></i>  info.email</p>
+        <p>
+          <i class="fas fa-phone mr-3"></i>info.telephone </p>
+        <p>
+          <i class="fas fa-print mr-3"></i> + 221 77 777 77 77</p>
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Links -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-black-50 py-3" style="text-align: center;">© 2020 Copyright:
+    <a class="dark-grey-text" style="text-align: center;" href="">taaramarket.com</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+    {% endblock %}
+
+    <script type="text/javascript"></script>
+    <script src="{% static 'js/boxicons.js' %}"></script>
+    <script src="{% static 'js/iconify.min.js' %}"></script>
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/all.min.js' %}"></script>
+    <script src="{% static 'js/mdb.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/slick.min.js'%}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/sama-scroll-nav.js' %}"></script>
+    <script src="{% static 'js/cart.js' %}"></script>
+    <script src="{% static 'js/yall.min.js' %}"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", yall);
+    </script>
+    <script>
+      if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+      }
+      </script>
+</body>
+</html>

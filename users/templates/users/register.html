@@ -1,0 +1,31 @@
+{% extends "marche/main.html" %}
+{% load crispy_forms_tags %}
+{% block carousel %}
+{% endblock %}
+{% block content %}
+
+<div class="container aeftcu">
+    <div class="row">
+        <div class="col-md-8">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+            <h4 class="register-title">Créer mon compte</h4>
+            <form method="post" class="register-form">
+                {% csrf_token %}
+                {{form|crispy}}
+                <input type="hidden" name="next" value="{{ next }}">
+                <button type="submit" class="btn btn-primary btn-block register-register">Créer mon compte</button>
+
+            </form>
+        </div>
+        <div class="col-md-4">
+            <p>Allow {{ a }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

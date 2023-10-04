@@ -1,0 +1,21 @@
+{% extends "marche/main.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<div class="row col-md-4 offset-md-4">
+  <div class="col-md-12 formulaire">
+      <form action="" method="post">
+        taarutaaru@outlook.fr
+          {% csrf_token %}
+          <fieldset class="form-group">
+              <legend class="md-12">Se connnecter</legend>
+              {{ form|crispy }}
+          </fieldset>
+          <div class="form-group">
+              <button class="btn btn-info" type="submit">Se connecter</button>
+          </div>
+      </form>
+  </div>
+</div>
+{% endblock %}

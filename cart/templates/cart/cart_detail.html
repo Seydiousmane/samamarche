@@ -1,0 +1,153 @@
+{% extends "marche/main.html" %}
+{% load static %}
+{% load humanize %}
+{% block carousel %}
+{% endblock %}
+{% block content %}
+{% if cart|length > 0 %}
+    <div class="container to_register cart_bigs aeftcu">
+        <div class="row">
+            <div class="col-md-12">
+        <h3 class="text-dark">Votre Panier</h3>
+        <h5 class="text-horaire">Prochaine livraison : <span class="horaire-livraison" style="color: rgb(0, 102, 79)!important;">{% for horaire in horaire_livraison %}{{ horaire.date_prochaine_livraison }}{% endfor %}</span></h5>
+        <div class="box-element" id="box-produit">
+
+            <br>
+            <table class="table">
+                <tr>
+                    <th><h5>Articles: <strong id="cartvv">{{ cart | length }}</strong></h5></th>
+                    {% if cart.coupon %}
+                        <th><h5>Code promo: <strong>{{ cart.coupon.code }} ({{ cart.coupon.reduction }}% off)</strong></h5></th>
+                        <th><h5>Total:<strong class="cf_plophyy" id="cartvve"> {{ cart.get_prix_total | intcomma }} FCFA</strong> <strong>{{ cart.get_prix_total_apres_reduction | intcomma }} FCFA</strong></h5></th>
+                    {% else %}
+                        <th><h5>Total:<strong class="" id="cartvve"> {{ cart.get_prix_total | intcomma }} FCFA</strong></h5></th>
+                    {% endif %}
+                    <th class="cart-commander">
+                        <a  style="float:right;" class="btn btn-success" href="{% url "commandes:creer_commande" %}">Commander</a>
+                    </th>
+                </tr>
+            </table>
+            
+        </div>
+
+        <br>
+        <div class="box-element">
+			<div class="cart-row">
+				<div style="flex:1" class="flex-cart"></div>
+                <div style="flex:2" class="flex-cart"><strong>Produit</strong></div>
+                <div style="flex:1" class="flex-cart">Supprimer</div>
+				<div style="flex:1" class="flex-cart"><strong>P.U/Qté</strong></div>
+				<div style="flex:1" class="flex-cart"><strong>Qté</strong></div>
+				<div style="flex:1" class="flex-cart"><strong>Total</strong></div>
+    		</div>
+			{% for item in cart %}
+			<div class="cart-row">
+                {% if item.produit.image %}
+				    <div style="flex:1"><img class="row-image" src="{{ item.produit.image.url }}"></div>
+                {% else %}
+                    <div style="flex:1"><img class="row-image" src="{% static 'images/courge.jpg' %}"></div>
+                {% endif %}
+                <div style="flex:2"><p class="afrtif">{{item.produit}}</p></div>
+                <div style="flex:1"><a class="delete_prod_cart afrtif" href="{% url 'cart:cart_remove' item.produit.id %}" id=""aria-haspopup="true" data-id="{{ item.produit.id }}" aria-expanded="false">
+                <i class="fas fa-shopping-cart"></i></li></a>
+                        
+                </div>
+                    
+				<div style="flex:1"><p class="afrtif">{{item.prix | intcomma }} FCFA/{{ item.produit.unite }}</p></div>
+                <div style="flex:1">
+    
+                    <form action="{% url "cart:cart_update" item.produit.id %}" method="post" class="form-order-cart" data-id="{{ item.produit.id }}">
+                        {{ item.update_quantite_form.quantite }}
+                        {{ item.update_quantite_form.update_quantite }}
+                        <input type="submit" value="Update" class="update_prod_qt">
+                        {% csrf_token %}
+                    </form>
+                            
+                </div>
+				<div style="flex:1"><p class="afrtif">{{item.prix_total | intcomma }} FCFA</p></div>
+            </div>
+                
+            {% endfor %}
+            <p class="afrtif">Avez-vous un code promo ?</p>
+            <form action="{% url "coupons:apply" %}" method="post">
+                {{ coupon_apply_form }}
+                <input type="submit" value="Appliquer" class="btn btn-success">
+                {% csrf_token %}
+            </form>
+
+            <p class="text-right">
+                <a href="{% url "marche:accueil" %}" class="btn btn-light light">Continuez vos achats</a>
+                <a class="btn btn-success" href="{% url "commandes:creer_commande" %}">Commander</a>
+            </p>
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="container to_register cart_mins">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-dark">Votre panier</h3>
+                <h5 class="text-horaire">Prochaine livraison : <span class="horaire-livraison" style="color: rgb(0, 102, 79)!important;">{% for horaire in horaire_livraison %}{{ horaire.date_prochaine_livraison }}{% endfor %}</span></h5>
+                <h5>Articles: <strong>{{ cart | length }}</strong></h5>
+                {% if cart.coupon %}
+                    <h5>Code promo: <strong>{{ cart.coupon.code }} ({{ cart.coupon.reduction }}% off)</strong></h5>
+                    <h5>Total:<strong class="cf_plophyy"> {{ cart.get_prix_total | intcomma }} FCFA</strong> <strong>{{ cart.get_prix_total_apres_reduction | intcomma }} FCFA</strong></h5>
+                {% else %}
+                    <h5>Total:<strong> {{ cart.get_prix_total | intcomma }} FCFA</strong></h5>
+                {% endif %}
+                {% for item in cart %}
+                <div class="row cart_prod_block">
+                        {% if item.produit.image %}
+                            <div class="col-4"><img class="row-image" src="{{ item.produit.image.url }}"></div>
+                        {% else %}
+                            <div class="col-4"><img class="row-image" src="{% static 'images/courge.jpg' %}"></div>
+                        {% endif %}
+                        <div class="col-8">
+                            <h6 class="afrtif">{{item.produit}}</h6>
+                            <small class="text-muted afrtif">{{ item.prix | intcomma }} FCFA - {{ item.produit.unite }}</small>
+                            <p><small class="text-muted afrtif">Total :{{ item.prix_total | intcomma }} FCFA</small></p>
+                            <div class="col-12">
+                            <div class="row">
+                                <div class="col-8">
+                                    <form action="{% url "cart:cart_update" item.produit.id %}" method="post" class="form-order-cart" data-id="{{ item.produit.id }}">
+                                        <span class="afrtif">Qté</span>{{ item.update_quantite_form.quantite }}
+                                        {{ item.update_quantite_form.update_quantite }}
+                                        <input type="submit" value="Update" class="update_prod_qt">
+                                        {% csrf_token %}
+                                    </form>
+                                </div>
+                                <div class="col-2" class="delete_prod_cart">
+                                    <i class="delete_prod_cart"></i>
+                                </div>
+                            </div>
+                            </div>
+                            
+                        </div>
+                    
+                </div>
+                {% endfor %}
+                <p class="afrtif">Entrer votre code promo:</p>
+                <form action="{% url "coupons:apply" %}" method="post">
+                    {{ coupon_apply_form }}
+                    <input type="submit" value="Appliquer" class="btn btn-success">
+                    {% csrf_token %}
+                </form>
+
+                <p class="">
+                    <a href="{% url "marche:accueil" %}" class="btn btn-light light">Continuez vos achats</a>
+                    <a class="btn btn-success" href="{% url "commandes:creer_commande" %}">Commander</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="col-md-12" style="text-align: center;">
+        <i class="bx bxs-cart icon-single empty-icon-cart" style="font-size: 6rem;"></i>
+        <p style="font-size: 1.5rem;">Votre panier est vide</p>
+        <a href="{% url 'marche:accueil' %}" class="btn btn-primary waves-effect waves-light">Faire vos courses</a>
+    </div>
+{% endif %}
+    
+{% endblock %}

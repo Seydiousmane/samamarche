@@ -1,0 +1,18 @@
+{% extends 'marche/main.html' %}
+
+{% block carousel %}{% endblock %}
+{% block content %}
+
+
+  <h2>Person Form</h2>
+
+  <form method="post" id="commandeForm" data-cities-url="{% url "commandes:ajax_load_quartiers" %}" novalidate>
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <button type="submit">Commander</button>
+    
+  </form>
+
+{% endblock %}

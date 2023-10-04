@@ -1,0 +1,65 @@
+{% extends "marche/main.html" %}
+{% load crispy_forms_tags %}
+{% block carousel %}
+{% endblock %}
+{% block content %}
+
+<div class="container aeftcu">
+    <div class="row">
+        <div class="col-md-4">
+          <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <a href="{% url 'profile' %}"><h6 class="my-0">Mon compte</h6></a>
+                <small class="text-muted"></small>
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <a href="{% url 'commandes:mes_commandes' %}"><h6 class="my-0">Mes commandes</h6></a>
+                <small class="text-muted"></small>
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <a href="#"><h6 class="my-0">Codes promo disponibles</h6></a>
+                <small class="text-muted"></small>
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <a href="{% url 'password_change' %}"><h6 class="my-0">Modifier mon de passe</h6></a>
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <a href="{% url 'logout' %}"><h6 class="my-0">Se déconnecter</h6></a>
+              </div>
+            </li>
+            
+          </ul>
+        </div>
+        <div class="col-md-8">
+            <h4 class="register-title">Mes commandes</h4>
+            <ul class="list-group mb-3">
+                {% for commande in commandes_user %}
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                  <div>
+                    <a href="{% url 'commandes:detail_commande' commande_id=commande.id %}" data-popup-url="{% url 'commandes:detail_commande' commande_id=commande.id %}" class="open-incident">
+                      <h6 class="my-0">Commande du {{ commande.date_creation }}</h6>
+                    </a>
+                    <small class="text-muted"></small>
+                  </div>
+                </li>
+                {% endfor %}
+                <!--
+                {% include "commandes/incident-modal.html" %}-->
+                
+              </ul>
+        </div>
+
+        
+    </div>
+</div>
+
+{% endblock %}

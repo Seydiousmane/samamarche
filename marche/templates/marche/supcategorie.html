@@ -1,0 +1,63 @@
+{% extends 'marche/main.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block description %}{{ supcategorie.description }} {% endblock %}
+<title>{% block title %}{% for cat in categorie %} {{ cat.nom }}{% endfor %} - Samamarché {% endblock %} </title>
+
+{% block carousel %}
+{% endblock %}
+{% block content %}
+
+    <!-- Legumes block -->
+    
+    {% for cat in categorie %}
+    <div class="container" style="padding-top: 10px;">
+        <a name="{{ cat.slug }}" class="title_categ"></a>
+        <div class="row">
+            <div class="col-md-12" id="categ">
+            
+            <h2 class="text-dark" id="{{ cat.slug }}">{{ cat.nom }}</h2>
+            
+          </div>
+        </div>
+    </div>
+
+    <div class="lkight">
+    <div class="container produit produits"> 
+        <div class="row">   
+           
+            {% for produit in cat.get_produits %} 
+            <div class="col-md-2 col-xs-3 col-sm-3 col-6 lkightpro">
+                {% if produit.image %}
+                <img src="{{ produit.image.url }}" class="w-100ce w-100cee" alt="">
+                {% else %}
+                <img src="{% static 'images/courge.jpg' %}" class="w-100ce w-100cee" alt="">
+                {% endif %}
+                <h5 class="my-3">{{ produit.nom }}</h5>
+                <span class="my-3">{{ produit.prix | intcomma }} FCFA/{{ produit.prix | intcomma }}</span>
+                
+                <form action="{% url "cart:cart_add" produit.id %}" method="post" class="form-order" data-id="{{ produit.id }}" >
+                    {{ cart_produit_form_cat }}
+                    {% csrf_token %}
+                    <a data-id="{{ produit.id }}" class="acheter-produit"><button>ACHETER</button></a>
+                </form>   
+            </div>
+            {% endfor %}
+       
+        </div>
+        </div> 
+          
+    </div>
+
+    {% endfor %}
+    <!--End legumes block-->
+
+    
+       
+{% endblock %}
+
+
+
+
+

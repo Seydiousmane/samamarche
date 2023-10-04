@@ -1,0 +1,72 @@
+{% extends 'marche/main.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block carousel %}
+{% endblock %}
+{% block content %}
+
+    <!-- Legumes block -->
+    <div class="container desc-categ aeftcu">
+        <div class="row">
+            <div class="col-md-12">
+              <ul  class="list-group">
+                <li class=" d-flex justify-content-between lh-condensed categ">
+                  <h2 class="text-dark">Les légumes</h2>
+                  <span class="see-all-prod">Voir tous</span>
+                </li>
+              </ul>
+              <p class="lead">Plus de 60 horticulteurs partenaires au Sénégal. De la fraîcheur dans votre assiette.</p>
+            </div>
+          </div>
+        </div>
+    </div>
+  
+
+    <div class="py-5 lkight">
+        <div class="container produit"> 
+            <div class="row">   
+            
+                {% for produit in produits %} 
+                <div class="col-md-2 col-xs-3 col-sm-3 col-6">
+                    <img src="{% static 'images/courge.jpg' %}" alt="" class="img img-responsive produit-categorie w-100">
+                    <h5 class="">{{ produit.nom }}</h5>
+                    <span class="">{{ produit.prix | intcomma }} FCFA/{{ produit.prix | intcomma }}</span>
+                    
+                    <form action="{% url "cart:cart_add" produit.id %}" method="post" class="form-order">
+                        {{ cart_produit_form_cat }}
+                        {% csrf_token %}
+                        <input type="submit" value="ACHETER">
+                    </form>   
+                </div>
+                {% endfor %}
+        
+        
+            </div>
+        </div> 
+        
+       
+    </div>
+    
+    <!--End legumes block-->
+
+    <div id="main" class="product-list">
+        <h1>
+            {% if categorie %}{{ categorie.nom }}
+                {% else %}Products
+            {% endif %}
+        </h1>
+        {% for produit in produits %}
+        <div class="item">
+        <a href="{{ produit.get_absolute_url }}">
+        <img src="{% if product.image %}{{ product.image.url }}{%
+        else %}{% endif %}">
+        </a>
+        <a href="{{ produit.get_absolute_url }}">{{ produit.nom }}</a>
+        <br>
+        ${{ produit.prix }}
+        </div>
+        {% endfor %}
+    </div>
+       
+{% endblock %}

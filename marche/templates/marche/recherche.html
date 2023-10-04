@@ -1,0 +1,36 @@
+{% extends 'marche/main.html' %}
+{% load humanize %}
+{% load static %}
+{% block carousel %}
+{% endblock %}
+{% block content %}
+
+<div class="lkight aeftcu">
+    <div class="container produit">
+        <div class="row">
+            {% for produit in results %}
+            <div class="col-md-2 lkightpro">
+                <img src="{{ produit.image.url }}" class="w-100ce w-100cee" alt="">
+                <h5 class="my-3">{{ produit.nom }}</h5>
+                <span class="my-3">{{ produit.prix | intcomma }} FCFA/{{ produit.unite }}</span>
+                
+                <form action="{% url "cart:cart_add" produit.id %}"  method="post" data-id="{{ produit.id }}" class="form-order" id="form">
+                    {{ cart_produit_form }}
+                    {% csrf_token %}
+                    <!--<button type="submit" data-id="{{ legume.id }}">Submit</button>-->
+                    <a data-id="{{ produit.id }}" class="acheter-produit"><button>Acheter</button></a>
+                    <!--<input type="submit" value="ACHETER" data-action="add" data-id="{{ legume.id }}" class="acheter-produit">-->
+                </form>
+                
+            </div>
+            {% empty %}
+            <div class="col-md-12 aeftcu" style="text-align: center;">
+                
+                <p style="font-size: 1.5rem;">Aucun résultat pour "{{ query }}"</p>
+                <a href="{% url 'marche:accueil' %}" class="btn btn-primary waves-effect waves-light">Retour à l'accueil</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

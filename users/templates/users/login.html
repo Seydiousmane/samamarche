@@ -1,0 +1,37 @@
+{% extends "marche/main.html" %}
+{% load crispy_forms_tags %}
+{% block carousel %}
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+  <p>a</p>
+{% else %}
+<div class="container aeftcu">
+  <div class="row">
+    <div class="col-md-8">
+      <h4 class="connect-title">Se connecter</h4>
+      <form method="post" class="connect-form">
+        {% csrf_token %}
+        <div class="form-group col-md-12 col-xs-12 col-sm-12 col-12">
+        <input type="hidden" name="next" value="{{ next }}">{{ form|crispy }}
+        </div>
+        <!--<button type="submit" class="btn btn-primary btn-block">Se connecter</button>-->
+        
+        <button type="submit" class="btn btn-primary btn-block connect-connect">Se connecter</button>
+      </form>
+  
+      <div class="connect-extras">
+        <a href="{% url "password_reset" %}">Mot de passe oublié ?</a><br>
+        <a href="{% url "register" %}?next={{ next }}">S'inscrire</a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <p>Lopin</p>
+    </div>
+  </div>
+</div>
+
+
+
+{% endif %}
+{% endblock %}

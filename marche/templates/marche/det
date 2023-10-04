@@ -1,0 +1,705 @@
+Poivrons (all), celeri, oignon vert, persils, thyn, ail, poireau Nokoss Poivrons, ails et herbes vertes 2
+
+Choux, manioc, batansé, diaxatou, carottes, navet, courge, citrouille Diggeul Légumes classiques 1 
+
+oignons, pommes de terre, Patates Frit 4
+
+haricot vert, haricot blanc, niebe, petit pois, pois chiche Légumes sec 8
+
+tomates, concombre, courgette, betterave, Farci tomates 
+
+salades et tomates, concombre, betterave 3
+
+legumes prets à cuisiner 9
+Paniers de légumes 5
+epices et aromes 6
+herbes aromatiques 7
+
+citrouille
+patates Cuisiner Cuisine
+salades Orner
+Nokoss
+
+
+Images class
+Configuration PWA
+
+
+fruits
+fruits locaux
+Jus na
+
+fruits
+
+
+{% extends 'marche/main.html' %}
+{% load static %}
+{% block carousel %}
+{% endblock %}
+{% block content %}
+
+   
+{% endblock %}
+
+
+
+<ul class="list-unstyled components links">
+    <li class="nav-item drop">
+      <a class="nav-link collapsed dropdown-toggle" href="#submenu1" data-toggle="collapse" >Légumes</a>
+      <div class="collapse" id="submenu1" aria-expanded="false">
+          <ul class="flex-column pl-2 nav">
+            <li class="nav-item"><a class="nav-link py-0" href="#">Orders</a></li>
+            <li class="nav-item"><a class="nav-link py-0" href="#">Orders</a></li>
+            <li class="nav-item"><a class="nav-link py-0" href="#">Orders</a></li>
+            <li class="nav-item"><a class="nav-link py-0" href="#">Orders</a></li>
+            <li class="nav-item"><a class="nav-link py-0" href="#">Orders</a></li>
+            <li class="nav-item"><a class="nav-link py-0" href="#">Orders</a></li>
+            <li class="nav-item"><a class="nav-link py-0" href="#">Orders</a></li>
+            <li><a class="dropdown-item" href="{% url "marche:produit_par_supcategorie" 'legumes' %}#legumes-classiques">Oignons, pommes de terre, patates</a></li>
+            
+          </ul>
+      </div>
+    </li>
+  
+    <li class="nav-item drop">
+      <a class="nav-link collapsed dropdown-toggle" href="#submenu2" data-toggle="collapse" >Fruits</a>
+      <div class="collapse" id="submenu2" aria-expanded="false">
+          <ul class="flex-column pl-2 nav">
+              <li class="nav-item"><a class="nav-link py-0" href="#">Orders</a></li>
+              
+          </ul>
+      </div>
+    </li>
+  
+    <li class="nav-item drop">
+        <a class="nav-link collapsed dropdown-toggle" href="#submenu4" data-toggle="collapse" >sub menu 2</a>
+        <div class="collapse" id="submenu4" aria-expanded="false">
+            <ul class="flex-column pl-2 nav">
+                <li class="nav-item"><a class="nav-link py-0" href="#">Orders</a></li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed py-1" href="#submenu1sub3" data-toggle="collapse" >Customers</a>
+                    <div class="collapse" id="submenu1sub3" aria-expanded="false">
+                        <ul class="flex-column nav pl-4">
+                            <li class="nav-item">
+                                <a class="nav-link p-1" href="#">
+                                    <i class="fa fa-fw fa-clock-o"></i> Daily
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link p-1" href="#">
+                                    <i class="fa fa-fw fa-dashboard"></i> Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link p-1" href="#">
+                                    <i class="fa fa-fw fa-bar-chart"></i> Charts
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link p-1" href="#">
+                                    <i class="fa fa-fw fa-compass"></i> 22222222Areas
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+      </li>
+    
+      <li class="nav-item"><a class="nav-link" href="#">Analytics</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Export</a></li>
+      
+</ul>
+
+<div class="overlay"></div>
+
+<div class="utility-nav d-none d-md-block">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <p class="small"><i class="bx bx-envelope"></i> logo@example.com | <i class="bx bx-phone"></i> +91-9876543210
+        </p>
+      </div>
+
+      <div class="col-12 col-md-6 text-right">
+        <p class="small">Free shipping on total of $99 of all products</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="navbar navbar-expand-md navbar-light bg-light main-menu" style="box-shadow:none">
+  <div class="container">
+
+    <button type="button" id="sidebarCollapse" class="btn btn-link d-block d-md-none">
+                <i class="bx bx-menu icon-single"></i>
+            </button>
+
+    <a class="navbar-brand" href="#">
+      <h4 class="font-weight-bold">Logo</h4>
+    </a>
+
+    <ul class="navbar-nav ml-auto d-block d-md-none">
+      <li class="nav-item">
+        <a class="btn btn-link" href="#"><i class="bx bxs-cart icon-single"></i> <span class="badge badge-danger">3</span></a>
+      </li>
+    </ul>
+
+    <div class="collapse navbar-collapse">
+      <form class="form-inline my-2 my-lg-0 mx-auto">
+        <input class="form-control" type="search" placeholder="Search for products..." aria-label="Search">
+        <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="bx bx-search"></i></button>
+      </form>
+
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="btn btn-link" href="#"><i class="bx bxs-cart icon-single"></i> <span class="badge badge-danger">3</span></a>
+        </li>
+        <li class="nav-item ml-md-3">
+          <a class="btn btn-primary" href="#"><i class="bx bxs-user-circle mr-1"></i> Log In / Register</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<nav class="navbar navbar-expand-md navbar-light bg-light sub-menu">
+  <div class="container">
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Schools</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Publishers</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Support
+                        </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Delivery Information</a>
+            <a class="dropdown-item" href="#">Privacy Policy</a>
+            <a class="dropdown-item" href="#">Terms & Conditions</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="search-bar d-block d-md-none">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <form class="form-inline mb-3 mx-auto">
+          <input class="form-control" type="search" placeholder="Search for products..." aria-label="Search">
+          <button class="btn btn-success" type="submit"><i class="bx bx-search"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-10 pl-0">
+          <a class="btn btn-primary" href="#"><i class="bx bxs-user-circle mr-1"></i> Log In</a>
+        </div>
+
+        <div class="col-2 text-left">
+          <button type="button" id="sidebarCollapseX" class="btn btn-link">
+                            <i class="bx bx-x icon-single"></i>
+                        </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ul class="list-unstyled components links">
+    <li class="active">
+      <a href="#"><i class="bx bx-home mr-3"></i> Home</a>
+    </li>
+    <li>
+      <a href="#"><i class="bx bx-carousel mr-3"></i> Products</a>
+    </li>
+    <li>
+      <a href="#"><i class="bx bx-book-open mr-3"></i> Schools</a>
+    </li>
+    <li>
+      <a href="#"><i class="bx bx-crown mr-3"></i> Publishers</a>
+    </li>
+    <li>
+      <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="bx bx-help-circle mr-3"></i>
+                    Support</a>
+      <ul class="collapse list-unstyled" id="pageSubmenu">
+        <li>
+          <a href="#">Delivery Information</a>
+        </li>
+        <li>
+          <a href="#">Privacy Policy</a>
+        </li>
+        <li>
+          <a href="#">Terms & Conditions</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#"><i class="bx bx-phone mr-3"></i> Contact</a>
+    </li>
+  </ul>
+
+  <h6 class="text-uppercase mb-1">Categories</h6>
+  <ul class="list-unstyled components mb-3">
+    <li>
+      <a href="#">Category 1</a>
+    </li>
+    <li>
+      <a href="#">Category 1</a>
+    </li>
+    <li>
+      <a href="#">Category 1</a>
+    </li>
+    <li>
+      <a href="#">Category 1</a>
+    </li>
+    <li>
+      <a href="#">Category 1</a>
+    </li>
+    <li>
+      <a href="#">Category 1</a>
+    </li>
+  </ul>
+
+  <ul class="social-icons">
+    <li><a href="#" target="_blank" title=""><i class="bx bxl-facebook-square"></i></a></li>
+    <li><a href="#" target="_blank" title=""><i class="bx bxl-twitter"></i></a></li>
+    <li><a href="#" target="_blank" title=""><i class="bx bxl-linkedin"></i></a></li>
+    <li><a href="#" target="_blank" title=""><i class="bx bxl-instagram"></i></a></li>
+  </ul>
+
+</nav>
+
+<section></section>
+<section></section>
+<section></section>
+<section></section>
+
+
+
+.btn .bx {
+    vertical-align: inherit;
+    margin-top: -3px;
+    font-size: 1.15rem;
+  }
+  
+  .form-control {
+    height: calc(2.5rem + 2px);
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+  }
+  
+  .btn {
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+  }
+  
+  .bx.icon-single {
+    font-size: 1.5rem;
+  }
+  
+  .form-inline .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .form-inline .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+  /* Small devices (landscape phones, 576px and up) */
+  @media (min-width: 576px) {
+  }
+  
+  /* Medium devices (tablets, 768px and up) */
+  @media (min-width: 768px) {
+    .form-inline .form-control {
+      width: 210px;
+    }
+  }
+  
+  /* Large devices (desktops, 992px and up) */
+  @media (min-width: 992px) {
+    .form-inline .form-control {
+      width: 440px;
+    }
+  }
+  
+  /* Extra large devices (large desktops, 1200px and up) */
+  @media (min-width: 1200px) {
+    .form-inline .form-control {
+      width: 600px;
+    }
+  }
+  
+  .sub-menu.navbar-light .navbar-nav .active > .nav-link,
+  .sub-menu.navbar-light .navbar-nav .nav-link.active,
+  .sub-menu.navbar-light .navbar-nav .nav-link.show,
+  .sub-menu.navbar-light .navbar-nav .show > .nav-link {
+    border-bottom: 3px solid #007bff;
+    color: #007bff;
+  }
+  
+  .navbar .navbar-toggler {
+    border: none;
+  }
+  
+  .navbar-light .navbar-toggler:focus {
+    outline: none;
+  }
+  
+  .navbar {
+    padding: 1rem;
+  }
+  
+  .main-menu {
+    position: relative;
+    z-index: 3;
+  }
+  
+  .sub-menu {
+    position: relative;
+    z-index: 2;
+    padding: 0 1rem;
+  }
+  
+  /* Medium devices (tablets, 768px and up) */
+  @media (min-width: 768px) {
+    .sub-menu {
+      padding: 0 1rem;
+    }
+  
+    .sub-menu.navbar-expand-md .navbar-nav .nav-link {
+      padding: 1rem 1.5rem;
+    }
+  }
+  
+  .navbar.bg-light {
+    background: #fff !important;
+    box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-dropdown .nav-link {
+    padding: 0.15rem 0;
+  }
+  
+  #sidebar {
+    background: #fff;
+    height: 100%;
+    left: -100%;
+    top: 0;
+    bottom: 0;
+    overflow: auto;
+    position: fixed;
+    transition: 0.4s ease-in-out;
+    width: 84%;
+    z-index: 5001;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+    padding: 1.25rem 1rem 1rem;
+  }
+  
+  #sidebar.active {
+    left: 0;
+  }
+  
+  #sidebar .sidebar-header {
+    background: #fff;
+    border-bottom: 1px solid #e4e4e4;
+    padding-bottom: 1.5rem;
+  }
+  
+  #sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #e4e4e4;
+    margin-bottom: 40px;
+  }
+  
+  #sidebar ul p {
+    color: #fff;
+    padding: 10px;
+  }
+  
+  #sidebar ul li a {
+    padding: 10px 16px;
+    font-size: 1.1em;
+    display: block;
+    color: #000;
+  }
+  
+  #sidebar ul li a:hover {
+    color: #7386d5;
+    background: #fff;
+  }
+  
+  #sidebar ul li.active > a,
+  #sidebar a[aria-expanded="true"] {
+    color: #007bff;
+    background: #e6f2ff;
+    border-radius: 6px;
+  }
+  
+  a[data-toggle="collapse"] {
+    position: relative;
+  }
+  
+  #sidebar .links .dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+  }
+  
+  section {
+    padding: 6rem;
+    background: #e4e4e4;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .overlay {
+    background: rgba(0, 0, 0, 0.7);
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    z-index: -1;
+    width: 100%;
+    opacity: 0;
+  }
+  
+  .overlay.visible {
+    opacity: 1;
+    z-index: 5000;
+  }
+  
+  /* .mobiHeader .menuActive~.overlay {
+      opacity: 1;
+      width: 100%;
+  } */
+  
+  ul.social-icons {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+  
+  ul.social-icons li {
+    display: inline-block;
+    margin-right: 0px;
+    margin-bottom: 0;
+  }
+  
+  #sidebar ul.social-icons li a {
+    font-size: 24px;
+  }
+  
+  .utility-nav {
+    background: #e4e4e4;
+    padding: 0.5rem 1rem;
+  }
+  
+  .utility-nav p {
+    margin-bottom: 0;
+  }
+  
+  .search-bar {
+    position: relative;
+    z-index: 2;
+    box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search-bar .form-control {
+    width: calc(100% - 45px);
+  }
+  
+  .avatar {
+    border-radius: 50%;
+    width: 4.5rem;
+    height: 4.5rem;
+    margin-right: 8px;
+  }
+  
+  .avatar.avatar-xs {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  
+  .user-dropdown .dropdown-menu {
+    left: auto;
+    right: 0;
+  }
+
+  
+  $(document).ready(function() {
+    $("#sidebarCollapse").on("click", function() {
+      $("#sidebar").addClass("active");
+    });
+  
+    $("#sidebarCollapseX").on("click", function() {
+      $("#sidebar").removeClass("active");
+    });
+  
+    $("#sidebarCollapse").on("click", function() {
+      if ($("#sidebar").hasClass("active")) {
+        $(".overlay").addClass("visible");
+        console.log("it's working!");
+      }
+    });
+  
+    $("#sidebarCollapseX").on("click", function() {
+      $(".overlay").removeClass("visible");
+    });
+  });
+  
+
+
+
+  <div class="navigo">
+    <!-- Top bar -->
+  <div class="top-bar navbar col-md-12">
+          
+          
+    <!-- Collapsible content -->
+    <div class="col-md-4 col-sm-4 col-12 Search" id="">
+
+      <!-- Search form -->
+      <form class="form-inline mr-auto search-search">
+        <div class="md-form my-0 my-form-search">
+          <input class="form-control recherche" type="text" placeholder="Rechercher un produit" aria-label="Search">
+          <i class="fas fa-search text-white ml-3" aria-hidden="true"></i>
+        </div>
+      </form>
+
+    </div>
+    <!-- Collapsible content -->
+    <div class="col-md-3 offset-md-5 col-sm-4 offset-sm-4 col-12 topitems">
+        <li class="profile">
+            <a class="" id="" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>Connexion /</a>
+        </li>
+        <li class="cart-panier">
+          <a class="" id=""aria-haspopup="true" aria-expanded="false">
+              <span class="">Panier<i class="fas fa-shopping-cart"></i>{{ cart | length }}</span>
+          </a>
+        </li>
+          </div>
+    <div class="">
+        
+    </div>    
+
+
+</div>
+<!-- End top bar -->
+<!-- Navigation -->
+
+<nav class="navbar navbar-navigation bg-light navbar-dark navbar-expand-lg">
+
+<div class="container">
+<a href="" class="navbar-brand"><img src="{% static 'images/placeholder.png' %}" alt="logo" title="Logo"></a>
+</div>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarResponsive">
+{% for categorie in categories %}
+<ul class="navbar-nav ml-auto">
+    <li class="nav-item"><a href="{{ categorie.get_absolute_url }}" class="nav-link">{{ categorie.nom }}</a></li>
+    
+</ul>
+{% endfor %}
+</div>
+</nav>
+
+<!-- End navigation -->
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  https://codepen.io/HICKTER/pen/wbVYxq
+
+
+  def supp_no_available(self):
+        cart = self.cart
+        produits = Produit.objects.filter(disponibilite=False)
+        """for produit in produits:
+            prod = Produit.objects.get(id=produit['produit'].id).id
+            if prod not in cart:
+                del self.cart[produit_id]"""
+
+        produit = Produit.objects.get(id=3).id
+        produit_id = str(produit)
+        """produit_dispo = produit.disponibilite
+        if produit_dispo == False:"""
+        if produit_id in self.cart:
+            del self.cart[produit_id]
+
+
+  
+def cart_detail(request):
+cart = Cart(request)
+user = request.user
+ids = cart.cart.keys()
+products = Produit.objects.filter(id__in=ids)
+items = []
+for prod in cart:
+    
+    cart.supp_no_available()
+"""for item in cart:
+    produit = Produit.objects.get(id=item['produit'].id).id
+    produit = produit
+    cart.supp_no_available()
+    #cart.supp_no_available()
+    #supprime_cart(request)
+    itemer = item['produit'].disponibilite
+    item['update_quantite_form'] = CartProduitForm(
+    initial={'quantite': item['quantite'],
+    'update_qt': True})"""
+
+return render(request, 'cart/cart_detail.html', {'cart':cart, 'itemer':ids, 'user':user})
